@@ -58,7 +58,7 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
         
-        df = [idx for idx in self.df['lang'] if not re.findall("[^\u0000-\u05C0\u2100-\u214F]+", idx)]
+        df = df[df['lang']=='en']
 
 
         
