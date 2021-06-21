@@ -38,7 +38,7 @@ class TweetDfExtractor:
         statuses_count 
         
     def find_full_text(self)->list:
-        text = 
+        text = self.tweets_list.set_option('display.max_colwidth', -1)
        
     
     def find_sentiments(self, text)->list:
@@ -46,22 +46,24 @@ class TweetDfExtractor:
         return polarity, self.subjectivity
 
     def find_created_time(self)->list:
-       
+        created_at = self.tweets_list["created_at"]
         return created_at
 
     def find_source(self)->list:
-        source = 
+        source = self.tweets_list["source"]
 
         return source
 
     def find_screen_name(self)->list:
-        screen_name = 
+        screen_name = self.tweets_list["screen_name"]
 
     def find_followers_count(self)->list:
-        followers_count = 
+        followers_count = self.tweets_list["followers_count"]
+        return follower_count
 
     def find_friends_count(self)->list:
-        friends_count = 
+        friends_count = self.tweets_list["friends_count"]
+        return friends_count
 
     def is_sensitive(self)->list:
         try:
@@ -75,20 +77,22 @@ class TweetDfExtractor:
         
     
     def find_retweet_count(self)->list:
-        retweet_count = 
+        retweet_count = self.tweets_list["retweet_count"]
+        return retweet_count
 
     def find_hashtags(self)->list:
-        hashtags =
+        hashtags = self.tweets_list["hashtags"]
+        return hashtags
 
     def find_mentions(self)->list:
-        mentions = 
+        mentions = self.tweets_list["user_mentions"]
 
 
     def find_location(self)->list:
         try:
             location = self.tweets_list['user']['location']
         except TypeError:
-            location = ''
+            location = 'TypeError: Check list of locations(indices)'
         
         return location
 

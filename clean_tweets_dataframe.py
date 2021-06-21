@@ -21,14 +21,14 @@ class Clean_Tweets:
         drop duplicate rows
         """
         
-        ---
+        df.drop_duplicates()
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        ----
+        df['created_at']= pd.to_datetime(df['created_at'])
         
         ----
         
@@ -41,10 +41,15 @@ class Clean_Tweets:
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
         """
-        df['polarity'] = pd.----
-        
-        ----
-        ----
+        df['polarity'] = pd.to_numeric(df['polarity'])
+        df['subjectivity'] = pd.to_numeric(df['subjectivity'])
+        df['retweet_count'] = pd.to_numeric(df['retweet_count'])
+        df['favorite_count'] = pd.to_numeric(df['favorite_count'])
+        df['followers'] = pd.to_numeric(df['followers'])
+        df['friends'] = pd.to_numeric(df['friends'])
+
+
+
         
         return df
     
@@ -53,6 +58,8 @@ class Clean_Tweets:
         remove non english tweets from lang
         """
         
-        df = ----
+        df = [idx for idx in self.df['lang'] if not re.findall("[^\u0000-\u05C0\u2100-\u214F]+", idx)]
+
+
         
         return df
