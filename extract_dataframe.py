@@ -74,6 +74,7 @@ class TweetDfExtractor:
         return is_sensitive
 
     def find_favourite_count(self)->list:
+        pass
         
     
     def find_retweet_count(self)->list:
