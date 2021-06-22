@@ -1,5 +1,7 @@
 # Twitter-Data-Analysis
 
+This is the fixed and revised code.
+
 ### So here are the bare minimum requirement for completing this task
 
 1. Fork repository to your github account
