@@ -38,7 +38,9 @@ class TweetDfExtractor:
         statuses_count 
         
     def find_full_text(self)->list:
-        text = self.tweets_list.set_option('display.max_colwidth', -1)
+        text = [x.get('retweeted_status', {}).get('extended_tweet',{}).get('full_text', '') \
+            for x in self.tweets_list]
+        return text
        
     
     def find_sentiments(self, text)->list:
