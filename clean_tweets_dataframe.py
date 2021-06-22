@@ -1,3 +1,6 @@
+import nltk
+import numpy as np
+import pandas as pd
 class Clean_Tweets:
     """
     The PEP8 Standard AMAZING!!!
@@ -20,18 +23,16 @@ class Clean_Tweets:
         """
         drop duplicate rows
         """
-        
-        df.drop_duplicates()
+        df=df.drop_duplicates(subset=None, keep='first', inplace = True)
+
         
         return df
     def convert_to_datetime(self, df:pd.DataFrame)->pd.DataFrame:
         """
         convert column to datetime
         """
-        df['created_at']= pd.to_datetime(df['created_at'])
-        
-        
-        
+        df['created_at'] = pd.to_datetime(df['created_at']).dt.date
+
         df = df[df['created_at'] >= '2020-12-31' ]
         
         return df
@@ -40,26 +41,25 @@ class Clean_Tweets:
         """
         convert columns like polarity, subjectivity, retweet_count
         favorite_count etc to numbers
+        
         """
         df['polarity'] = pd.to_numeric(df['polarity'])
-        df['subjectivity'] = pd.to_numeric(df['subjectivity'])
+        df['quote_count'] = pd.to_numeric(df['quote_count'])
+        df['reply_count'] = pd.to_numeric(df['reply_count'])
         df['retweet_count'] = pd.to_numeric(df['retweet_count'])
         df['favorite_count'] = pd.to_numeric(df['favorite_count'])
-        df['followers'] = pd.to_numeric(df['followers'])
-        df['friends'] = pd.to_numeric(df['friends'])
-
-
 
         
         return df
     
-    def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
-        """
+    def remove_non_english_tweets(self, df:pd.DataFra
+    
         remove non english tweets from lang
         """
-        
-        df = df[df['lang']=='en']
-
-
+        def is_english():
+            nltk.download('words')
+            words = set(nltk.corpus.words.words())
+            sentence=" ".join(w for w in nltk.wordpunct_tokenize(sent) if w.lower() in words or not w.isalpha())
+        df = df["text"].apply(is_english())
         
         return df
