@@ -1,0 +1,6 @@
+language: python
+python:
+  - "3.9"
+  - "3.8"
+cache: pip
+script: python test_clean_tweets_dataframe.py
