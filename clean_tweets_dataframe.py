@@ -52,14 +52,11 @@ class Clean_Tweets:
         
         return df
     
-    def remove_non_english_tweets(self, df:pd.DataFra
-    
+    def remove_non_english_tweets(self, df:pd.DataFrame)->pd.DataFrame:
+        """
         remove non english tweets from lang
         """
-        def is_english():
-            nltk.download('words')
-            words = set(nltk.corpus.words.words())
-            sentence=" ".join(w for w in nltk.wordpunct_tokenize(sent) if w.lower() in words or not w.isalpha())
-        df = df["text"].apply(is_english())
-        
+        df = self.df
+        df = df[df['language'] == 'en']
+
         return df

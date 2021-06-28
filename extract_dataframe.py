@@ -58,7 +58,7 @@ class TweetDfExtractor:
             polarity.append(sentimentedText[i].sentiment.polarity)
             subjectivity.append(sentimentedText[i].sentiment.subjectivity)
         
-        return polarity, self.subjectivity
+        return polarity, subjectivity
 
     def find_created_time(self)->list:
         created_at = [x.get('created_at', None) for x in self.tweets_list]
@@ -82,10 +82,7 @@ class TweetDfExtractor:
         return friends_count
 
     def is_sensitive(self)->list:
-        try:
-            is_sensitive = [x['possibly_sensitive'] for x in self.tweets_list]
-        except KeyError:
-            is_sensitive = None
+        is_sensitive = [x.get('possibly_sensitive', None) for x in self.tweets_list]
 
         return is_sensitive
 
@@ -139,6 +136,8 @@ class TweetDfExtractor:
         hashtags = self.find_hashtags()
         mentions = self.find_mentions()
         location = self.find_location()
+        # print(type(created_at), type(source), type(text), type(polarity), type(subjectivity), type(lang), type(fav_count), type(retweet_count), type(screen_name), type(follower_count), type(friends_count), type(sensitivity), type(hashtags), type(mentions), type(location))
+        # print(type(sensitivity))
         data = zip(created_at, source, text, polarity, subjectivity, lang, fav_count, retweet_count, screen_name, follower_count, friends_count, sensitivity, hashtags, mentions, location)
         df = pd.DataFrame(data=data, columns=columns)
 
@@ -153,7 +152,7 @@ if __name__ == "__main__":
     # required column to be generated you should be creative and add more features
     columns = ['created_at', 'source', 'original_text','clean_text', 'sentiment','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
     'original_author', 'screen_count', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place', 'place_coord_boundaries']
-    _, tweet_list = read_json("../covid19.json")
+    _, tweet_list = read_json("./data/covid19.json")
     tweet = TweetDfExtractor(tweet_list)
     tweet_df = tweet.get_tweet_df() 
 
